@@ -3,8 +3,7 @@ import DashboardLayout from './layouts/dashboard/DashboardLayout';
 
 import UserPage from './pages/UserPage';
 
-export default function Router() {
-  const routes = useRoutes([
+const Router = () => useRoutes([
     {
       path: '/',
       element: <DashboardLayout />,
@@ -15,5 +14,4 @@ export default function Router() {
     },
   ]);
 
-  return routes;
-}
+export default Router;

@@ -49,7 +49,7 @@ export default function UserListHead({
         {headLabel.map((headCell) => (
           <TableCell
             key={headCell.id}
-            align={headCell.alignRight ? 'left' : 'left'}
+            align={headCell.alignRight ? 'right' : 'left'}
             sortDirection={orderBy === headCell.id ? order : false}
           >
             <TableSortLabel
@@ -60,7 +60,7 @@ export default function UserListHead({
             >
               {headCell.label}
               {orderBy === headCell.id ? (
-                <Box sx={{ ...visuallyHidden }}>{order === 'desc' ? 'sorted descending' : 'sorted ascending'}</Box>
+                <Box sx={{ ...visuallyHidden }}>{`sorted ${order === 'desc' ? 'descending' : 'ascending'}`}</Box>
               ) : null}
             </TableSortLabel>
           </TableCell>
