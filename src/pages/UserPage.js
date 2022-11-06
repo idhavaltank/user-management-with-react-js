@@ -25,7 +25,7 @@ import AddEditUserModal from '../modals/AddEditUserModal';
 import ConfirmationModal from '../modals/ConfirmationModal';
 import { removeUser } from '../redux/actions/userAction';
 import { UserListHead, UserListToolbar } from '../sections/user';
-import TABLE_HEAD from '../utils/userTableHeader';
+import TABLE_HEAD from '../utils/TABLE_HEAD';
 
 const descendingComparator = (a, b, orderBy) => (b[orderBy] < a[orderBy] ? -1 : b[orderBy] > a[orderBy] ? 1 : 0);
 

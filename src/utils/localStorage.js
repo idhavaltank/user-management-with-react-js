@@ -20,7 +20,7 @@ const storeData = (user) => {
     if (position > -1) {
       storageObj.splice(position, 1, user);
     } else {
-      storageObj.push(user);
+      storageObj.unshift(user);
     }
   }
   localStorage.setItem(storageName, JSON.stringify(storageObj));

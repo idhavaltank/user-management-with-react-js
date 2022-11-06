@@ -24,7 +24,8 @@ const GENDER_OPTION = ['Men', 'Women'];
 const AddEditUserModal = (props) => {
   const { open, handleClose, currentUser } = props;
   const userId = currentUser?.userId || '';
-
+  const date = new Date();
+  const formattedDate = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
   // local state
   const [isLoading, setIsLoading] = useState(false);
   const [customHobby, setCustomHobby] = useState(false);
@@ -45,7 +46,8 @@ const AddEditUserModal = (props) => {
     birthDate: Yup.date()
       .typeError('please enter a valid date')
       .required()
-      .min('1980-01-01', 'your birth year must be after 1980.'),
+      .min('1980-01-01', 'your birth year must be after 1980.')
+      .max(formattedDate, 'kindly select past date.'),
     college: Yup.string()
       .matches(/^([A-Za-z0-9]+\s?)*$/, 'Enter valid college Name')
       .required('college is required'),

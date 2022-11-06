@@ -1,17 +1,6 @@
-import { Box, Checkbox, TableCell, TableHead, TableRow, TableSortLabel } from '@mui/material';
 import PropTypes from 'prop-types';
+import {  Checkbox, TableRow, TableCell, TableHead, TableSortLabel } from '@mui/material';
 
-const visuallyHidden = {
-  border: 0,
-  margin: -1,
-  padding: 0,
-  width: '1px',
-  height: '1px',
-  overflow: 'hidden',
-  position: 'absolute',
-  whiteSpace: 'nowrap',
-  clip: 'rect(0 0 0 0)',
-};
 
 UserListHead.propTypes = {
   order: PropTypes.oneOf(['asc', 'desc']),
@@ -49,7 +38,7 @@ export default function UserListHead({
         {headLabel.map((headCell) => (
           <TableCell
             key={headCell.id}
-            align={headCell.alignRight ? 'right' : 'left'}
+            align={headCell.alignRight ? 'left' : 'left'}
             sortDirection={orderBy === headCell.id ? order : false}
           >
             <TableSortLabel
@@ -59,9 +48,6 @@ export default function UserListHead({
               onClick={createSortHandler(headCell.id)}
             >
               {headCell.label}
-              {orderBy === headCell.id ? (
-                <Box sx={{ ...visuallyHidden }}>{`sorted ${order === 'desc' ? 'descending' : 'ascending'}`}</Box>
-              ) : null}
             </TableSortLabel>
           </TableCell>
         ))}

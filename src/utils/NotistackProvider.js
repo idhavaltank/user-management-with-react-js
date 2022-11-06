@@ -16,7 +16,6 @@ const SnackbarStyles = () => {
             width: '100%',
             padding: theme.spacing(1),
             margin: theme.spacing(0.25, 0),
-            // boxShadow: theme.customShadows.z,
             borderRadius: theme.shape.borderRadius,
             color: theme.palette.grey[isLight ? 0 : 800],
             backgroundColor: theme.palette.grey[isLight ? 900 : 0],
@@ -43,6 +42,25 @@ const SnackbarStyles = () => {
     />
   );
 };
+
+const SnackbarIcon = ({ icon, color }) => (
+  <Box
+    component="span"
+    sx={{
+      mr: 1.5,
+      width: 40,
+      height: 40,
+      display: 'flex',
+      borderRadius: 1.5,
+      alignItems: 'center',
+      justifyContent: 'center',
+      color: `${color}.main`,
+      bgcolor: (theme) => alpha(theme.palette[color].main, 0.16),
+    }}
+  >
+    <Iconify icon={icon} width={24} height={24} />
+  </Box>
+);
 
 const NotistackProvider = ({ children }) => {
   const notistackRef = useRef(null);
@@ -76,25 +94,6 @@ const NotistackProvider = ({ children }) => {
     </>
   );
 };
-
-const SnackbarIcon = ({ icon, color }) => (
-  <Box
-    component="span"
-    sx={{
-      mr: 1.5,
-      width: 40,
-      height: 40,
-      display: 'flex',
-      borderRadius: 1.5,
-      alignItems: 'center',
-      justifyContent: 'center',
-      color: `${color}.main`,
-      bgcolor: (theme) => alpha(theme.palette[color].main, 0.16),
-    }}
-  >
-    <Iconify icon={icon} width={24} height={24} />
-  </Box>
-);
 
 NotistackProvider.propTypes = {
   children: PropTypes.any,
