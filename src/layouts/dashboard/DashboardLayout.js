@@ -8,7 +8,7 @@ const Main = styled('div')(() => ({
   paddingTop: 24,
 }));
 
-// Used Dashboard Layout as container 
+// Used Dashboard Layout as container.
 const DashboardLayout = () => (
   <Main>
     <Outlet />
