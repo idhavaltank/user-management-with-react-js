@@ -3,7 +3,9 @@ import DashboardLayout from './layouts/dashboard/DashboardLayout';
 
 import UserPage from './pages/UserPage';
 
-const Router = () => useRoutes([
+// Here I maintain project routing
+const Router = () =>
+  useRoutes([
     {
       path: '/',
       element: <DashboardLayout />,

@@ -6,11 +6,13 @@ const createStorage = (storage) => {
   storageName = storage || 'userList';
 };
 
+// fetch data from storage
 const getData = () => {
   const data = localStorage.getItem(storageName);
   return data ? JSON.parse(data) : [];
 };
 
+// store and update data in localStorage
 const storeData = (user) => {
   const storageObj = JSON.parse(localStorage.getItem(storageName));
   if (storageObj.length === null) {
@@ -26,6 +28,7 @@ const storeData = (user) => {
   localStorage.setItem(storageName, JSON.stringify(storageObj));
 };
 
+// delete specific user from user list.
 const deleteById = (userId) => {
   const storageObj = JSON.parse(localStorage.getItem(storageName));
   const index = storageObj.findIndex((e) => e.userId === userId);

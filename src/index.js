@@ -9,13 +9,14 @@ import NotistackProvider from './utils/NotistackProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
+// Wrap App component with Redux store and notistack(use for display toast).
 root.render(
   <BrowserRouter>
-      <Provider store={store}>
-        <NotistackProvider>
-          <App />
-        </NotistackProvider>
-      </Provider>
+    <Provider store={store}>
+      <NotistackProvider>
+        <App />
+      </NotistackProvider>
+    </Provider>
   </BrowserRouter>
 );
 // If you want to start measuring performance in your app, pass a function

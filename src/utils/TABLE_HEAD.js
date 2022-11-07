@@ -6,6 +6,6 @@ const TABLE_HEAD = [
   { id: 'college', label: 'College', alignRight: false },
   { id: 'address', label: 'Address', alignRight: false },
   { id: 'hobbies', label: 'Hobbies', alignRight: false },
-  { id: 'action', label: 'Action', alignRight: false },
+  { id: 'action', label: 'Action', alignRight: true, disabled: true },
 ];
 export default TABLE_HEAD;

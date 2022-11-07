@@ -1,9 +1,7 @@
-import { IconButton, InputAdornment, OutlinedInput, Toolbar, Tooltip, Typography } from '@mui/material';
+import { InputAdornment, OutlinedInput, Toolbar } from '@mui/material';
 import { alpha, styled } from '@mui/material/styles';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
 import Iconify from '../../components/iconify/Iconify';
-import ConfirmationModal from '../../modals/ConfirmationModal';
 
 const StyledRoot = styled(Toolbar)(({ theme }) => ({
   height: 96,
@@ -28,59 +26,25 @@ const StyledSearch = styled(OutlinedInput)(({ theme }) => ({
   },
 }));
 
-const UserListToolbar = ({ numSelected, filterName, removedSelected, onFilterName }) => {
-  const [open, setOpen] = useState(false);
-  return (
-    <>
-      <StyledRoot
-        sx={{
-          ...(numSelected > 0 && {
-            color: 'primary.main',
-            bgcolor: 'primary.lighter',
-          }),
-        }}
-      >
-        {numSelected > 0 ? (
-          <Typography component="div" variant="subtitle1">
-            {numSelected} selected
-          </Typography>
-        ) : (
-          <StyledSearch
-            value={filterName}
-            onChange={onFilterName}
-            placeholder="Search user..."
-            startAdornment={
-              <InputAdornment position="start">
-                <Iconify icon="eva:search-fill" sx={{ color: 'text.disabled', width: 20, height: 20 }} />
-              </InputAdornment>
-            }
-          />
-        )}
-
-        {numSelected > 0 ? (
-          <Tooltip title="Delete" onClick={() => setOpen(true)}>
-            <IconButton>
-              <Iconify icon="eva:trash-2-fill" />
-            </IconButton>
-          </Tooltip>
-        ) : null}
-      </StyledRoot>
-      <ConfirmationModal
-        open={open}
-        handleClose={() => setOpen(false)}
-        handleConfirm={() => {
-          removedSelected();
-          setOpen(false);
-        }}
+const UserListToolbar = ({ filterName, onFilterName }) => (
+  <>
+    <StyledRoot>
+      <StyledSearch
+        value={filterName}
+        onChange={onFilterName}
+        placeholder="Search user..."
+        startAdornment={
+          <InputAdornment position="start">
+            <Iconify icon="eva:search-fill" sx={{ color: 'text.disabled', width: 20, height: 20 }} />
+          </InputAdornment>
+        }
       />
-    </>
-  );
-};
+    </StyledRoot>
+  </>
+);
 UserListToolbar.propTypes = {
-  numSelected: PropTypes.number,
   filterName: PropTypes.string,
   onFilterName: PropTypes.func,
-  removedSelected: PropTypes.func,
 };
 
 export default UserListToolbar;

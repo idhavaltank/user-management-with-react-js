@@ -1,5 +1,5 @@
 import { LoadingButton } from '@mui/lab';
-import { Grid } from '@mui/material';
+import { Alert, Grid } from '@mui/material';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -24,8 +24,6 @@ const GENDER_OPTION = ['Men', 'Women'];
 const AddEditUserModal = (props) => {
   const { open, handleClose, currentUser } = props;
   const userId = currentUser?.userId || '';
-  const date = new Date();
-  const formattedDate = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
   // local state
   const [isLoading, setIsLoading] = useState(false);
   const [customHobby, setCustomHobby] = useState(false);
@@ -38,20 +36,25 @@ const AddEditUserModal = (props) => {
   const userSchema = Yup.object().shape({
     name: Yup.string()
       .required('Name is required')
-      .matches(/^([A-Za-z0-9]+\s?)*$/, 'Enter valid user name')
+      .matches(/^([A-Za-z0-9]+\s?)*$/, 'Enter valid name.')
       .trim(),
-    email: Yup.string().email('Must be a valid email').required('Email is required'),
-    address: Yup.string().required('Address is required'),
-    gender: Yup.string().required('gender is required'),
+    email: Yup.string().required('Email is required').email('Must be a valid email'),
+    address: Yup.string()
+      .required('Address is required')
+      .matches(/^([A-Za-z0-9]+\s?)*$/, 'Enter valid address.'),
+    gender: Yup.string().required('Gender is required'),
     birthDate: Yup.date()
-      .typeError('please enter a valid date')
+      .typeError('Please enter a valid date')
       .required()
-      .min('1980-01-01', 'your birth year must be after 1980.')
-      .max(formattedDate, 'kindly select past date.'),
+      .min('1960-01-01', 'Your birth year must be after 01-01-1960.')
+      .max('2000-01-01', 'Your birth year must be before 01-01-2000.'),
     college: Yup.string()
-      .matches(/^([A-Za-z0-9]+\s?)*$/, 'Enter valid college Name')
-      .required('college is required'),
-    hobbies: Yup.array().min(1).of(Yup.string().required()).required('Hobbies is required'),
+      .required('College is required')
+      .matches(/^([A-Za-z0-9]+\s?)*$/, 'Enter valid college Name'),
+    customHobbies: Yup.string().when('isCustomHobby', {
+      is: (isCustomHobby) => isCustomHobby,
+      then: Yup.string().required('Custom hobby is required,  otherwise unchecked "Other" from hobbies.'),
+    }),
   });
 
   // form default values
@@ -64,6 +67,8 @@ const AddEditUserModal = (props) => {
       email: '',
       college: '',
       hobbies: '',
+      customHobbies: '',
+      isCustomHobby: '',
     }),
     []
   );
@@ -75,13 +80,14 @@ const AddEditUserModal = (props) => {
     defaultValues,
   });
 
-  const { reset, handleSubmit, watch } = methods;
+  const {
+    reset,
+    resetField,
+    handleSubmit,
+    watch,
+    formState: { isSubmitting },
+  } = methods;
   const values = watch();
-
-  useEffect(() => {
-    reset(userId ? { ...currentUser } : { ...defaultValues });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentUser]);
 
   const onSubmit = () => {
     setIsLoading(true);
@@ -90,19 +96,27 @@ const AddEditUserModal = (props) => {
       handleClose({ key: 'addEditModal' });
       setIsLoading(false);
       const userObject = {
+        ...values,
         userId: userId || uuid(),
         name: values.name.trim(),
-        email: values.email,
         address: values.address.trim(),
-        hobbies: values.hobbies,
+        customHobbies: values.customHobbies.trim(),
         college: values.college.trim(),
-        gender: values.gender,
       };
       dispatch(addUpdateUser({ ...userObject }));
       enqueueSnackbar(`User ${!userId ? 'Created' : 'Updated'} Successfully`);
       reset(defaultValues);
     }, 1000);
   };
+
+  // Update form values based on userId
+  useEffect(() => {
+    reset(userId ? { ...currentUser } : { ...defaultValues });
+    if (currentUser.isCustomHobby) {
+      setCustomHobby(currentUser.isCustomHobby);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentUser]);
 
   return (
     <Dialog fullWidth open={open} onClose={() => handleClose({ key: 'addEditModal' })}>
@@ -135,14 +149,27 @@ const AddEditUserModal = (props) => {
               <RHFMultiCheckbox
                 name="hobbies"
                 label="Hobbies"
-                disabled={'true'}
                 sx={{ display: 'flex', flexDirection: 'column' }}
                 options={['Reading', 'Gaming', 'Traveling', 'Drawing']}
               />
-              <RHFMultiCheckbox onChange={(e) => setCustomHobby(e.target.checked)} name="hobbies" options={['other']} />
+              <RHFMultiCheckbox
+                onChange={(e) => {
+                  setCustomHobby(e.target.checked);
+                  if (!e.target.checked) resetField('customHobbies');
+                }}
+                name="isCustomHobby"
+                options={['other']}
+              />
             </Grid>
             <Grid item xs={12} sx={{ marginTop: 1 }}>
-              {customHobby && <RHFTextField name="customHobby" label="Custom hobby" />}
+              {customHobby && (
+                <>
+                  <Alert variant="outlined" severity="info" sx={{ fontSize: '12px', my: 1, py: 0 }}>
+                    Please add multiple hobbies with ","(comma). | Like: hobby1,hobby2
+                  </Alert>
+                  <RHFTextField name="customHobbies" label="Custom hobby" />
+                </>
+              )}
             </Grid>
             <Grid item xs={12} sx={{ marginTop: 1 }}>
               <RHFRadioGroup name="gender" label="Gender" options={GENDER_OPTION} />
@@ -163,7 +190,7 @@ const AddEditUserModal = (props) => {
           >
             Cancel
           </Button>
-          <LoadingButton type="submit" variant="contained" name="submit" loading={isLoading}>
+          <LoadingButton type="submit" variant="contained" name="submit" loading={isLoading || isSubmitting}>
             {!userId ? 'Create' : 'Save'}
           </LoadingButton>
         </DialogActions>

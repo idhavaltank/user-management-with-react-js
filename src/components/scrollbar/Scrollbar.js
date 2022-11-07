@@ -1,6 +1,5 @@
 import { Box } from '@mui/material';
 import PropTypes from 'prop-types';
-import { memo } from 'react';
 import { StyledRootScrollbar, StyledScrollbar } from './styles';
 
 Scrollbar.propTypes = {
@@ -30,4 +29,4 @@ function Scrollbar({ children, sx, ...other }) {
   );
 }
 
-export default memo(Scrollbar);
+export default Scrollbar;
