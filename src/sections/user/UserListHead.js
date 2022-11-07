@@ -27,7 +27,7 @@ export default function UserListHead({ order, orderBy, headLabel, onRequestSort 
               hideSortIcon
               active={orderBy === headCell.id}
               direction={orderBy === headCell.id ? order : 'asc'}
-              onClick={!headCell?.disabled && createSortHandler(headCell.id)}
+              onClick={() => !headCell?.disabled && createSortHandler(headCell.id)}
             >
               {headCell.label}
             </TableSortLabel>
