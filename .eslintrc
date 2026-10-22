@@ -4,17 +4,8 @@
     "browser": true,
     "es2021": true
   },
-  "extends": [
-    "airbnb",
-    "plugin:jsx-a11y/recommended",
-    "plugin:react-hooks/recommended",
-    "prettier"
-  ],
-  "plugins": [
-    "react",
-    "react-hooks",
-    "prettier"
-  ],
+  "extends": ["airbnb", "plugin:jsx-a11y/recommended", "plugin:react-hooks/recommended", "prettier"],
+  "plugins": ["react", "react-hooks", "prettier"],
   "parser": "@babel/eslint-parser",
   "parserOptions": {
     "ecmaVersion": 8,
@@ -76,5 +67,28 @@
         "array": false
       }
     ]
-  }
+  },
+  "overrides": [
+    {
+      "files": ["**/*.ts", "**/*.tsx"],
+      "parser": "@typescript-eslint/parser",
+      "plugins": ["@typescript-eslint"],
+      "parserOptions": {
+        "ecmaVersion": 2020,
+        "sourceType": "module",
+        "ecmaFeatures": { "jsx": true }
+      },
+      "rules": {
+        "no-undef": 0,
+        "no-use-before-define": 0,
+        "no-restricted-globals": 0,
+        "no-unused-vars": 0,
+        "import/no-unresolved": 0,
+        "import/extensions": 0,
+        "@typescript-eslint/no-unused-vars": 1,
+        "@typescript-eslint/no-explicit-any": 0,
+        "@typescript-eslint/consistent-type-imports": 0
+      }
+    }
+  ]
 }
