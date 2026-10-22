@@ -1,12 +1,14 @@
+import { beforeEach, describe, expect, test, vi } from 'vitest';
 import {
   ApiError,
+  API_BASE_URL,
   clearCsrfToken,
   listUsers,
   login,
 } from './client';
 
 describe('API client', () => {
-  const fetchMock = jest.fn() as jest.MockedFunction<typeof fetch>;
+  const fetchMock = vi.fn<typeof fetch>();
 
   beforeEach(() => {
     fetchMock.mockReset();
@@ -23,9 +25,8 @@ describe('API client', () => {
 
     await listUsers({ page: 2, pageSize: 5, search: 'Ada', sort: 'name', order: 'asc' });
 
-    const apiBaseUrl = (process.env.REACT_APP_API_URL || 'http://localhost:8000').replace(/\/$/, '');
     expect(fetchMock).toHaveBeenCalledWith(
-      `${apiBaseUrl}/api/v1/users?page=2&pageSize=5&search=Ada&sort=name&order=asc`,
+      `${API_BASE_URL}/api/v1/users?page=2&pageSize=5&search=Ada&sort=name&order=asc`,
       expect.objectContaining({ credentials: 'include' })
     );
   });

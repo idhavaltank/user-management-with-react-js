@@ -25,7 +25,6 @@ root.render(
     </Provider>
   </BrowserRouter>
 );
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+// Performance reporting is opt-in; pass a handler here when metrics need to be
+// logged or sent to an analytics endpoint.
 reportWebVitals();

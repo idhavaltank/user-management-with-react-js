@@ -31,7 +31,7 @@ const LoginPage = (): JSX.Element => {
     try {
       await loginUser(dispatch, credentials);
       navigate('/user', { replace: true });
-    } catch (_requestError) {
+    } catch {
       // The auth reducer exposes the normalized error to the form.
     } finally {
       setIsSubmitting(false);

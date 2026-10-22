@@ -1,5 +1,5 @@
-// Keep this callback type local because CRA compiles this file as CommonJS
-// while web-vitals exposes ESM typings under Node16 module resolution.
+// Keep this callback type local so performance reporting stays optional and
+// does not couple the application entry point to a specific web-vitals type.
 type ReportHandler = (metric: unknown) => void;
 
 const reportWebVitals = (onPerfEntry?: ReportHandler): void => {

@@ -1,3 +1,4 @@
+import { beforeEach, expect, test } from 'vitest';
 import { LEGACY_USER_STORAGE_KEY, MIGRATION_STATE_KEY, pendingLegacyUsers } from './localStorageMigration';
 
 beforeEach(() => {

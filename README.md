@@ -20,9 +20,13 @@ The design applies single responsibility at module boundaries, interface segrega
 npm ci
 npm run typecheck
 npm run lint
-CI=true npm test -- --watchAll=false --runInBand
+npm run test:run
 npm run build
 npm start
 ```
+
+The frontend uses Vite for development/builds and Vitest for unit tests. It requires
+Node.js `^20.19.0` or `>=22.12.0`. Set `VITE_API_URL` to the FastAPI base URL
+before starting the app; browser E2E tests use `FRONTEND_URL` and `API_URL`.
 
 For browser tests, set `FRONTEND_URL` and `API_URL` when running the local frontend and FastAPI backend on non-default ports.

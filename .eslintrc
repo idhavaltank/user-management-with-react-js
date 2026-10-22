@@ -11,17 +11,17 @@
     "prettier"
   ],
   "plugins": [
+    "@typescript-eslint",
     "react",
     "react-hooks",
     "prettier"
   ],
-  "parser": "@babel/eslint-parser",
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "ecmaVersion": 8,
-    "requireConfigFile": false,
+    "ecmaVersion": "latest",
+    "sourceType": "module",
     "ecmaFeatures": {
-      "experimentalObjectRestSpread": true,
-      "impliedStrict": true
+      "jsx": true
     }
   },
   "rules": {
@@ -80,8 +80,6 @@
   "overrides": [
     {
       "files": ["**/*.ts", "**/*.tsx"],
-      "parser": "@typescript-eslint/parser",
-      "plugins": ["@typescript-eslint"],
       "parserOptions": {
         "ecmaVersion": 2020,
         "sourceType": "module",

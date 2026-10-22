@@ -1,13 +1,14 @@
+import { beforeEach, describe, expect, test, vi } from 'vitest';
 import { createAuthApi } from './authApi';
-import { createUserApi } from './userApi';
 import type { HttpClient } from './httpClient';
+import { createUserApi } from './userApi';
 
 describe('API capability boundaries', () => {
-  const request = jest.fn<Promise<unknown>, [string, RequestInit?, AbortSignal?]>();
+  const request = vi.fn<HttpClient['request']>();
   const client: HttpClient = {
     request: request as HttpClient['request'],
-    setCsrfToken: jest.fn(),
-    clearCsrfToken: jest.fn(),
+    setCsrfToken: vi.fn(),
+    clearCsrfToken: vi.fn(),
   };
 
   beforeEach(() => request.mockReset());

@@ -69,9 +69,11 @@ const AddEditUserModal = ({ open, handleClose, currentUser, onSaved }: AddEditUs
     college: Yup.string()
       .required('College is required')
       .matches(/^([A-Za-z0-9]+\s?)*$/, 'Enter valid college Name'),
+    hobbies: Yup.array().of(Yup.string()).required(),
+    isCustomHobby: Yup.array().of(Yup.string()).required(),
     customHobbies: Yup.string().when('isCustomHobby', {
       is: (isCustomHobby: string[] | undefined) => isCustomHobby?.includes('other'),
-      then: Yup.string().required('Custom hobby is required,  otherwise unchecked "Other" from hobbies.'),
+      then: (schema) => schema.required('Custom hobby is required, otherwise uncheck "Other" from hobbies.'),
     }),
   });
 
@@ -94,7 +96,8 @@ const AddEditUserModal = ({ open, handleClose, currentUser, onSaved }: AddEditUs
   const methods = useForm<FormValues>({
     mode: 'onBlur',
     reValidateMode: 'onBlur',
-    resolver: yupResolver(userSchema) as Resolver<FormValues>,
+    // Yup validates the date as a Date while the form also accepts the HTML date input string.
+    resolver: yupResolver(userSchema) as unknown as Resolver<FormValues>,
     defaultValues,
   });
 

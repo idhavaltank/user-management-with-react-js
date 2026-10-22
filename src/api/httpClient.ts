@@ -5,7 +5,7 @@ export { ApiError } from './errors';
 
 type ErrorResponse = components['schemas']['ErrorResponse'];
 
-export const API_BASE_URL = (process.env.REACT_APP_API_URL || 'http://localhost:8000').replace(/\/$/, '');
+export const API_BASE_URL = (import.meta.env.VITE_API_URL || 'http://localhost:8000').replace(/\/$/, '');
 
 const UNSAFE_METHODS = new Set(['POST', 'PATCH', 'PUT', 'DELETE']);
 
@@ -67,7 +67,7 @@ export class FetchHttpClient implements HttpClient {
       let payload: Partial<ErrorResponse> = {};
       try {
         payload = (await response.json()) as Partial<ErrorResponse>;
-      } catch (_error) {
+      } catch {
         // The HTTP status text is the fallback when an upstream response is not JSON.
       }
 

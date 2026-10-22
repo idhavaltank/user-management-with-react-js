@@ -1,5 +1,12 @@
 # Project Structure
 
+> This file preserves the original `frontend/` JavaScript structure for reference.
+> The active `frontend-ts/` application uses Vite/Vitest and TypeScript. Its Vite
+> entry point is `index.html`, its compiler configuration is `tsconfig.json`, and
+> its development API URL is configured with `VITE_API_URL`. The legacy CRA files
+> listed below belong to the original JavaScript frontend and are not dependencies
+> of `frontend-ts`.
+
 ```
 frontend/
 ├── public

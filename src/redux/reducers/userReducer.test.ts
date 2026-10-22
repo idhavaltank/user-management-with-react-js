@@ -1,5 +1,6 @@
-import reducer, { initialUserState } from './userReducer';
+import { expect, test } from 'vitest';
 import { USER_DELETED, USER_SAVED, USERS_LOADED } from '../Types';
+import reducer, { initialUserState } from './userReducer';
 
 const user = {
   id: 'user-1',
